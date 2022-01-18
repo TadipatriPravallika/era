@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.neo.employee.app.employeerestapi.services;
 
 import java.util.List;
@@ -13,10 +11,7 @@ import com.neo.employee.app.employeerestapi.exception.EmployeeExistsException;
 import com.neo.employee.app.employeerestapi.model.Employee;
 import com.neo.employee.app.employeerestapi.repo.EmployeeRepo;
 
-/**
- * @author neoBusinessMan
- *
- */
+
 @Service
 public class EmployeeServicesImpl implements EmployeeServices 
 {
@@ -26,10 +21,17 @@ public class EmployeeServicesImpl implements EmployeeServices
 	@Override
 	public String createEmployee(Employee employee) {
 		// TODO Auto-generated method stub
-		if(employeeRepo.existsById(employee.getId())) {
+		try
+		{
+		employeeRepo.save(employee);
+		System.out.println("employee saved successfully");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error while saving employee");
+			e.printStackTrace();
 			throw new EmployeeExistsException("Employee Already Exists");
 		}
-		employeeRepo.save(employee);
 		return "Saved Employee";
 	}
 
